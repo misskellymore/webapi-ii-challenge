@@ -11,6 +11,7 @@ server.use(express.json());
 // line 10 is "middleware"
 
 server.use('/api/post', postRouter);
+
 // First argument is the route you want to prepend all of routes inside of postRouter
 
 

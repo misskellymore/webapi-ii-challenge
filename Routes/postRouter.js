@@ -17,6 +17,20 @@ router.get('/', (req, res) => {
     
 });
 
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    db.findById(id)
+    // this method expects an id as it's only parameter and returns the
+    // post corresponding to the id provided or an empty array if no post 
+    // with that id is found
+    .then(post => {
+        console.log(post);
+        res.status(200).json(post);
+        
+    });
+
+});
+
 
 // To export this file
 module.exports = router;
