@@ -26,9 +26,22 @@ router.get('/:id', (req, res) => {
     .then(post => {
         console.log(post);
         res.status(200).json(post);
-        
+
     });
 
+});
+
+
+router.post('/', (req, res) => {
+    const { title, contents} = req.body;
+    if (!title || !contents){
+        return res.status(400).json({err: "need title and content"});
+    }
+    db.insert({title, contents})
+    // calling insert passing it a post object will add it to the database 
+    // and return an object with the id of the inserted post. The object looks 
+    // like this: { id: 123 }
+    .then(id => res.status(200).json(id));
 });
 
 
