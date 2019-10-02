@@ -101,6 +101,20 @@ router.delete('/:id', (req, res) => {
 });
 
 
+router.get('/:post_id/comments', (req, res) => {
+    // findpostcomments in db.js
+    const {post_id} = req.params;
+    db.findPostComments(post_id)
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(err => {
+            console.log('get comments', err);
+            res.status(500).json({err: 'err getting comments'});
+        });
+});
+
+
 
 // To export this file
 module.exports = router;
