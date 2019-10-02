@@ -80,6 +80,27 @@ router.put('/:id', (req, res) => {
 }});
 
 
+router.delete('/:id', (req, res) => {
+    const {id} = req.params;
+
+    db.remove(id)
+        .then(removed => {
+            if (removed) {
+                res.status(204).end();
+                // 204 means successful deltetion 
+            } else {
+                res.status(404).json({err: 'post with this id does not exist'});
+            }
+
+        })
+        .catch(err => {
+            console.log('delete router', err);
+            res.status(500).json({err: 'error deleting post'});
+        });
+
+});
+
+
 
 // To export this file
 module.exports = router;
