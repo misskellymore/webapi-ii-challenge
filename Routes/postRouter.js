@@ -45,6 +45,42 @@ router.post('/', (req, res) => {
 });
 
 
+
+
+
+router.put('/:id', (req, res) => {
+    const {id} = req.params
+    const { title, contents} = req.body;
+    if (!title && !contents){
+        return res.status(400).json({err: "need title and content"});
+    } else {
+        db.update(id, {title, contents})
+//  accepts two arguments, the first is the id of the post to update and 
+// the second is an object with the changes to apply. It returns the count of 
+// updated records. If the count is 1 it means the record was updated correctly
+            .then(post => {
+                console.log(post)
+                if (!post) {
+                    return (
+                        res.status(404).json({err: 'post does not exist'})
+
+                    )                    
+                } else {
+                    res.status(200).json(post);
+                }
+                
+            })
+    
+    
+        
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({err: 'error updating'});
+        });
+}});
+
+
+
 // To export this file
 module.exports = router;
 
