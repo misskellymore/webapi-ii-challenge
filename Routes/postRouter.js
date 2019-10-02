@@ -105,6 +105,8 @@ router.get('/:post_id/comments', (req, res) => {
     // findpostcomments in db.js
     const {post_id} = req.params;
     db.findPostComments(post_id)
+    // the findPostComments accepts a postId as its first parameter 
+    // and returns all comments on the post associated with the post id.
         .then(comments => {
             res.status(200).json(comments);
         })
@@ -114,6 +116,36 @@ router.get('/:post_id/comments', (req, res) => {
         });
 });
 
+
+// Ask Daisy
+router.get('/:post_id/comments', (req, res) => {
+    
+    const {id} = req.params;
+    db.findCommentById(id)
+   
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(err => {
+            console.log('get comments', err);
+            res.status(500).json({err: 'err getting comments'});
+        });
+});
+
+
+router.post('/:post_id/comments', (req, res) => {
+    const {post_id} = req.params;
+    const {text} = req.body;
+
+    db.insertComment({ text, post_id})
+        .then(commentid => {
+            res.status(200).json(commentid);
+        })
+        .catch(err => {
+            console.log('insertcomment', err);
+            res.status(500).json({err: 'err adding comment'});
+        });
+});
 
 
 // To export this file
